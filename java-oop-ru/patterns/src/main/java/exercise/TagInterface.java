@@ -4,5 +4,6 @@ package exercise;
 interface TagInterface {
 
     String render();
-}    
+}
+
 // END
