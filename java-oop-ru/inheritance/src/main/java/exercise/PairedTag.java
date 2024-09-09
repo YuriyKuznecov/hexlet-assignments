@@ -7,26 +7,23 @@ import java.util.stream.Collectors;
 // BEGIN
 class PairedTag extends Tag {
 
-    private String title;
     private String body;
-    private List<Tag> tags;
+    private List<Tag> children;
 
-    PairedTag(String title, Map<String, String> data, String body, List<Tag> tags) {
-	super(data);
-	this.title = title;
-	this.tags = tags;
+    PairedTag(String name, Map<String, String> attributes, String body, List<Tag> children) {
+        super(name, attributes);
         this.body = body;
+        this.children = children;
     }
 
     public String toString() {
-	var listString = tags.stream()
-		.map(Tag :: toString)
-	        .collect(Collectors.joining(""));
-	if (super.toString().equals("")) {
-	    return String.format("<%s>%s%s</%s>", title, body, listString, title);
-	} else {    
-            return String.format("<%s %s>%s%s</%s>", title, super.toString(), body, listString, title);
-	}
+        String attributes = stringifyAttributes();
+        String name = getName();
+        String value = children.stream()
+            .map(Object::toString)
+            .collect(Collectors.joining(""));
+
+        return String.format("<%s%s>%s%s</%s>", name, attributes, body, value, name);
     }
 }    
 

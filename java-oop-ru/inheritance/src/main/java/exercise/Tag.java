@@ -4,23 +4,30 @@ import java.util.stream.Collectors;
 import java.util.Map;
 
 // BEGIN
-import java.util.ArrayList;
-
 class Tag {
+    
+    private String name;	
+    private Map<String, String> attributes;
 
-    private Map<String, String> data;
-
-    Tag(Map<String, String> data) {
-        this.data = data;
+    Tag(String name, Map<String, String> attributes) {
+	this.name = name;
+        this.attributes = attributes;
     }
 
-    public String toString() {
-	    var results = new ArrayList<String>();
-	    data.forEach((key, value) -> results.add(String.format("%s=\"%s\"", key, value)));
-	    return results.stream()
-		.collect(Collectors.joining(" "));
+    
 
-    }	
+    public String stringifyAttributes() {
+        return attributes.keySet().stream()
+            .map(key -> {
+                String value = attributes.get(key);
+                return String.format(" %s=\"%s\"", key, value);
+            })
+            .collect(Collectors.joining(""));
+    }
+
+    public String getName() {
+        return name;
+    }
 }
 
 // END
